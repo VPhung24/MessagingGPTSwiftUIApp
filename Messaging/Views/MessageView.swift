@@ -35,7 +35,7 @@ struct MessageView: View {
             }
 
             if message.isFromCurrentUser {
-                Image("profile-placeholder")
+                Image(systemName: "person.crop.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 40, height: 40)
