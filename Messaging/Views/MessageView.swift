@@ -34,13 +34,7 @@ struct MessageView: View {
                     .foregroundColor(.gray)
             }
 
-            if message.isFromCurrentUser {
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-            } else {
+            if !message.isFromCurrentUser {
                 Spacer()
             }
         }
@@ -50,7 +44,17 @@ struct MessageView: View {
 
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageView(message: Message(id: "1", content: "Test message", isFromCurrentUser: false))
+        Group {
+            MessageView(message: Message(id: "1", content: "Test message", isFromCurrentUser: false))
+                .previewLayout(PreviewLayout.sizeThatFits)
+                .padding()
+                .previewDisplayName("Default preview")
+
+            MessageView(message: Message(id: "1", content: "Test message", isFromCurrentUser: true))
+                .previewLayout(PreviewLayout.sizeThatFits)
+                .padding()
+                .previewDisplayName("fromCurrentUserPreview")
+        }
     }
 }
 

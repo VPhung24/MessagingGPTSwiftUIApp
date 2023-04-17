@@ -24,8 +24,10 @@ struct ChatView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(messages) { message in
                         MessageView(message: message)
-                            .padding(.leading, message.isFromCurrentUser ? 40 : 8)
-                            .padding(.trailing, message.isFromCurrentUser ? -40 : 40)
+                            .padding(EdgeInsets(top: 0,
+                                                leading: message.isFromCurrentUser ? 40 : 8,
+                                                bottom: 0,
+                                                trailing: message.isFromCurrentUser ? 8 : 40))
                     }
                 }
                 .padding(.top)
