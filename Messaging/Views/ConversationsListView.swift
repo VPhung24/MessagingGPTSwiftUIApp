@@ -17,19 +17,32 @@ struct ConversationsListView: View {
 
     var body: some View {
         NavigationView {
-            List(conversations) { conversation in
-                NavigationLink(destination: ChatView(conversation: conversation)) {
-                    HStack {
-                        Text(conversation.user)
-                            .font(.headline)
-                        Spacer()
-                        Text(conversation.lastMessage)
-                            .font(.footnote)
-                            .foregroundColor(.gray)
+            List {
+                ForEach(conversations) { conversation in
+                    NavigationLink(destination: ChatView(conversation: conversation)) {
+                        HStack(spacing: 12) {
+                            Image(systemName: "person.crop.circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(conversation.user)
+                                    .font(.headline)
+
+                                Text(conversation.lastMessage)
+                                    .font(.footnote)
+                                    .foregroundColor(.gray)
+                                    .lineLimit(1)
+                            }
+                        }
+                        .padding(.vertical, 8)
                     }
                 }
             }
-            .navigationBarTitle("Conversations")
+            .listStyle(PlainListStyle())
+            .navigationBarTitle("GPT Messages")
         }
     }
 }
