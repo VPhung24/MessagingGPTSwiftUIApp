@@ -10,9 +10,9 @@ import SwiftUI
 struct ConversationsListView: View {
     // Sample data for conversations
     let conversations = [
-        Conversation(id: "1", user: "John", lastMessage: "Hey, how's it going?"),
-        Conversation(id: "2", user: "Jane", lastMessage: "Catch you later!"),
-        Conversation(id: "3", user: "Mike", lastMessage: "Did you watch the game last night?")
+        Conversation(id: "1", user: "Jamey Gannon", lastMessage: "YEEEEE really excited"),
+        Conversation(id: "2", user: "Jen Aprahamian", lastMessage: "Still cant believe Joe and Taylor are over"),
+        Conversation(id: "3", user: "Cristina Vanko", lastMessage: "HE DID WHAT?")
     ]
 
     var body: some View {
@@ -42,7 +42,7 @@ struct ConversationsListView: View {
                 }
             }
             .listStyle(PlainListStyle())
-            .navigationBarTitle("GPT Messages")
+            .navigationBarTitle("Messages")
         }
     }
 }
