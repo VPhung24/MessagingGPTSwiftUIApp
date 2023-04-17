@@ -15,6 +15,7 @@
 		082B87B529E5FAC900304F36 /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082B87B429E5FAC900304F36 /* MessageInputView.swift */; };
 		082B87BA29E5FB0200304F36 /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082B87B929E5FB0200304F36 /* ConversationModel.swift */; };
 		082B87BC29E5FB1600304F36 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082B87BB29E5FB1600304F36 /* MessageModel.swift */; };
+		087C15EE29EDDACC00F826CB /* MessagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087C15ED29EDDACC00F826CB /* MessagingViewModel.swift */; };
 		08FAD21129EDC50500D092EE /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FAD21029EDC50500D092EE /* MessageView.swift */; };
 		08FAD21329EDC91E00D092EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 08FAD21229EDC91E00D092EE /* README.md */; };
 		08FAD21529EDC98300D092EE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 08FAD21429EDC98300D092EE /* .gitignore */; };
@@ -35,6 +36,7 @@
 		082B87B429E5FAC900304F36 /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		082B87B929E5FB0200304F36 /* ConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModel.swift; sourceTree = "<group>"; };
 		082B87BB29E5FB1600304F36 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
+		087C15ED29EDDACC00F826CB /* MessagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingViewModel.swift; sourceTree = "<group>"; };
 		08FAD21029EDC50500D092EE /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		08FAD21229EDC91E00D092EE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		08FAD21429EDC98300D092EE /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				082B87A229E5FAA500304F36 /* MessagingApp.swift */,
+				087C15EF29EDDB0B00F826CB /* View Models */,
 				08FAD21A29EDCAD000D092EE /* Views */,
 				082B87B829E5FAF600304F36 /* Models */,
 				082B87A629E5FAA600304F36 /* Assets.xcassets */,
@@ -103,6 +106,14 @@
 				082B87BB29E5FB1600304F36 /* MessageModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		087C15EF29EDDB0B00F826CB /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				087C15ED29EDDACC00F826CB /* MessagingViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 		08FAD21A29EDCAD000D092EE /* Views */ = {
@@ -225,6 +236,7 @@
 				082B87BC29E5FB1600304F36 /* MessageModel.swift in Sources */,
 				08FAD21129EDC50500D092EE /* MessageView.swift in Sources */,
 				082B87B129E5FAB800304F36 /* ConversationsListView.swift in Sources */,
+				087C15EE29EDDACC00F826CB /* MessagingViewModel.swift in Sources */,
 				082B87BA29E5FB0200304F36 /* ConversationModel.swift in Sources */,
 				082B87A329E5FAA500304F36 /* MessagingApp.swift in Sources */,
 			);

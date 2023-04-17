@@ -8,12 +8,7 @@
 import SwiftUI
 
 struct ConversationsListView: View {
-    // Sample data for conversations
-    let conversations = [
-        Conversation(id: "1", user: "Jamey Gannon", lastMessage: "YEEEEE really excited"),
-        Conversation(id: "2", user: "Jen Aprahamian", lastMessage: "Still cant believe Joe and Taylor are over"),
-        Conversation(id: "3", user: "Cristina Vanko", lastMessage: "HE DID WHAT?")
-    ]
+    var conversations: [Conversation]
 
     var body: some View {
         NavigationView {
@@ -49,6 +44,8 @@ struct ConversationsListView: View {
 
 struct ConversationsListView_Previews: PreviewProvider {
     static var previews: some View {
-        ConversationsListView()
+        ConversationsListView(conversations: [Conversation(id: "1", user: "Jamey Gannon", lastMessage: "YEEEEE really excited"),
+                                                   Conversation(id: "2", user: "Jen Aprahamian", lastMessage: "Still cant believe Joe and Taylor are over"),
+                                                   Conversation(id: "3", user: "Cristina Vanko", lastMessage: "HE DID WHAT?")])
     }
 }
