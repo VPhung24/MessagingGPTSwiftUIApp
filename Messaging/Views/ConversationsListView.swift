@@ -14,7 +14,7 @@ struct ConversationsListView: View {
         Conversation(id: "2", user: "Jane", lastMessage: "Catch you later!"),
         Conversation(id: "3", user: "Mike", lastMessage: "Did you watch the game last night?")
     ]
-    
+
     var body: some View {
         NavigationView {
             List(conversations) { conversation in

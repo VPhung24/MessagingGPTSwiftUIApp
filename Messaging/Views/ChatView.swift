@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChatView: View {
     var conversation: Conversation
-    
+
     // Sample data for messages
     let messages = [
         Message(id: "1", content: "Hey, how's it going?", isFromCurrentUser: false),
@@ -17,7 +17,7 @@ struct ChatView: View {
         Message(id: "3", content: "Did you watch the game last night?", isFromCurrentUser: false),
         Message(id: "4", content: "No, I missed it. What happened?", isFromCurrentUser: true)
     ]
-    
+
     var body: some View {
         VStack {
             ScrollView {
@@ -33,7 +33,7 @@ struct ChatView: View {
             .padding(.horizontal)
             .background(Color(.systemGray6))
             .edgesIgnoringSafeArea(.bottom)
-            
+
             MessageInputView()
         }
         .navigationBarTitle(conversation.user, displayMode: .inline)

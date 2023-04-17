@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MessageView: View {
     var message: Message
-    
+
     var body: some View {
         HStack(alignment: .bottom, spacing: 12) {
             if !message.isFromCurrentUser {
@@ -21,19 +21,19 @@ struct MessageView: View {
             } else {
                 Spacer()
             }
-            
+
             VStack(alignment: message.isFromCurrentUser ? .trailing : .leading, spacing: 4) {
                 Text(message.content)
                     .padding(10)
                     .background(message.isFromCurrentUser ? Color.blue : Color(.systemGray5))
                     .foregroundColor(message.isFromCurrentUser ? .white : .black)
                     .cornerRadius(16, corners: message.isFromCurrentUser ? [.topLeft, .topRight, .bottomLeft] : [.topLeft, .topRight, .bottomRight])
-                
+
                 Text("2:34 PM")
                     .font(.caption2)
                     .foregroundColor(.gray)
             }
-            
+
             if message.isFromCurrentUser {
                 Image("profile-placeholder")
                     .resizable()
@@ -57,7 +57,7 @@ struct MessageView_Previews: PreviewProvider {
 struct CornerRadiusStyle: Shape {
     var cornerRadius: CGFloat
     var corners: UIRectCorner
-    
+
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
         return Path(path.cgPath)
