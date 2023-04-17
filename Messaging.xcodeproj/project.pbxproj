@@ -18,7 +18,7 @@
 		08FAD21129EDC50500D092EE /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08FAD21029EDC50500D092EE /* MessageView.swift */; };
 		08FAD21329EDC91E00D092EE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 08FAD21229EDC91E00D092EE /* README.md */; };
 		08FAD21529EDC98300D092EE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 08FAD21429EDC98300D092EE /* .gitignore */; };
-		08FAD21729EDC98700D092EE /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 08FAD21629EDC98700D092EE /* LICENSE.md */; };
+		08FAD21929EDCA4000D092EE /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 08FAD21829EDCA4000D092EE /* LICENSE.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +34,7 @@
 		08FAD21029EDC50500D092EE /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		08FAD21229EDC91E00D092EE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		08FAD21429EDC98300D092EE /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
-		08FAD21629EDC98700D092EE /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LICENSE.md; path = Messaging/LICENSE.md; sourceTree = SOURCE_ROOT; };
+		08FAD21829EDCA4000D092EE /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,9 +75,9 @@
 				08FAD21029EDC50500D092EE /* MessageView.swift */,
 				082B87A629E5FAA600304F36 /* Assets.xcassets */,
 				082B87A829E5FAA600304F36 /* Preview Content */,
-				08FAD21629EDC98700D092EE /* LICENSE.md */,
 				08FAD21429EDC98300D092EE /* .gitignore */,
 				08FAD21229EDC91E00D092EE /* README.md */,
+				08FAD21829EDCA4000D092EE /* LICENSE.md */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -157,7 +157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08FAD21729EDC98700D092EE /* LICENSE.md in Resources */,
+				08FAD21929EDCA4000D092EE /* LICENSE.md in Resources */,
 				08FAD21529EDC98300D092EE /* .gitignore in Resources */,
 				08FAD21329EDC91E00D092EE /* README.md in Resources */,
 				082B87AA29E5FAA600304F36 /* Preview Assets.xcassets in Resources */,
