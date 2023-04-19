@@ -8,26 +8,18 @@
 import SwiftUI
 
 struct ChatView: View {
-    var conversation: Conversation
-
-    // Sample data for messages
-    let messages = [
-        Message(id: "1", content: "Hey, how's it going?", isFromCurrentUser: false),
-        Message(id: "2", content: "I'm doing great, thanks for asking!", isFromCurrentUser: true),
-        Message(id: "3", content: "Did you watch the game last night?", isFromCurrentUser: false),
-        Message(id: "4", content: "No, I missed it. What happened?", isFromCurrentUser: true)
-    ]
+    var conversation: ConversationModel
 
     var body: some View {
         VStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
-                    ForEach(messages) { message in
+                    ForEach(conversation.messages) { message in
                         MessageView(message: message)
                             .padding(EdgeInsets(top: 0,
-                                                leading: message.isFromCurrentUser ? 40 : 8,
+                                                leading: message.fromUser == "viv" ? 40 : 8,
                                                 bottom: 0,
-                                                trailing: message.isFromCurrentUser ? 8 : 40))
+                                                trailing: message.fromUser == "viv" ? 8 : 40))
                     }
                 }
                 .padding(.top)
@@ -38,12 +30,12 @@ struct ChatView: View {
 
             MessageInputView()
         }
-        .navigationBarTitle(conversation.user, displayMode: .inline)
+        .navigationBarTitle(conversation.users.last ?? "debug", displayMode: .inline)
     }
 }
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(conversation: Conversation(id: "1", user: "John", lastMessage: "Hey, how's it going?"))
+        ChatView(conversation: ConversationModel(users: ["viv", "jen"], messages: [MessageModel(content: "hello world", fromUser: "viv", time: Date(timeIntervalSince1970: TimeInterval(integerLiteral: 30))), MessageModel(content: "hello world", fromUser: "jen", time: Date(timeIntervalSince1970: TimeInterval(integerLiteral: 30)))]))
     }
 }

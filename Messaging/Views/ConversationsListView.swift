@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ConversationsListView: View {
-    var conversations: [Conversation]
+    @StateObject var viewModel = ConversationViewModel()
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(conversations) { conversation in
+                ForEach(viewModel.conversations) { conversation in
                     NavigationLink(destination: ChatView(conversation: conversation)) {
                         HStack(spacing: 12) {
                             Image(systemName: "person.crop.circle.fill")
@@ -23,10 +23,10 @@ struct ConversationsListView: View {
                                 .clipShape(Circle())
 
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(conversation.user)
+                                Text(conversation.users.last ?? "name")
                                     .font(.headline)
 
-                                Text(conversation.lastMessage)
+                                Text(conversation.messages.last?.content ?? "")
                                     .font(.footnote)
                                     .foregroundColor(.gray)
                                     .lineLimit(1)
@@ -37,15 +37,13 @@ struct ConversationsListView: View {
                 }
             }
             .listStyle(PlainListStyle())
-            .navigationBarTitle("Messages")
+            .navigationBarTitle("Conversations")
         }
     }
 }
 
 struct ConversationsListView_Previews: PreviewProvider {
     static var previews: some View {
-        ConversationsListView(conversations: [Conversation(id: "1", user: "Jamey Gannon", lastMessage: "YEEEEE really excited"),
-                                                   Conversation(id: "2", user: "Jen Aprahamian", lastMessage: "Still cant believe Joe and Taylor are over"),
-                                                   Conversation(id: "3", user: "Cristina Vanko", lastMessage: "HE DID WHAT?")])
+        ConversationsListView()
     }
 }

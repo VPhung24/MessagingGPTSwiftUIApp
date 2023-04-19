@@ -21,11 +21,9 @@ struct YourApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
-    @ObservedObject private var messagingViewModel = MessagingViewModel()
-
     var body: some Scene {
         WindowGroup {
-            ConversationsListView(conversations: messagingViewModel.conversations)
+            ConversationsListView()
         }
     }
 }

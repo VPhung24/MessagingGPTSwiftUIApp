@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct MessageView: View {
-    var message: Message
+    var message: MessageModel
 
     var body: some View {
+
         HStack(alignment: .bottom, spacing: 12) {
-            if !message.isFromCurrentUser {
+            if message.fromUser != "viv" {
                 Image(systemName: "person.crop.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -22,19 +23,19 @@ struct MessageView: View {
                 Spacer()
             }
 
-            VStack(alignment: message.isFromCurrentUser ? .trailing : .leading, spacing: 4) {
+            VStack(alignment: message.fromUser == "viv" ? .trailing : .leading, spacing: 4) {
                 Text(message.content)
                     .padding(10)
-                    .background(message.isFromCurrentUser ? Color.blue : Color(.systemGray5))
-                    .foregroundColor(message.isFromCurrentUser ? .white : .black)
-                    .cornerRadius(16, corners: message.isFromCurrentUser ? [.topLeft, .topRight, .bottomLeft] : [.topLeft, .topRight, .bottomRight])
+                    .background(message.fromUser == "viv" ? Color.blue : Color(.systemGray5))
+                    .foregroundColor(message.fromUser == "viv" ? .white : .black)
+                    .cornerRadius(16, corners: message.fromUser == "viv" ? [.topLeft, .topRight, .bottomLeft] : [.topLeft, .topRight, .bottomRight])
 
                 Text("2:34 PM")
                     .font(.caption2)
                     .foregroundColor(.gray)
             }
 
-            if !message.isFromCurrentUser {
+            if !(message.fromUser == "viv") {
                 Spacer()
             }
         }
@@ -45,12 +46,13 @@ struct MessageView: View {
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            MessageView(message: Message(id: "1", content: "Test message", isFromCurrentUser: false))
+            MessageView(message: MessageModel(content: "user user",
+                                              fromUser: "jen", time: Date(timeIntervalSince1970: TimeInterval(TimeInterval(NSDate().timeIntervalSince1970)))))
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("Default preview")
 
-            MessageView(message: Message(id: "1", content: "Test message", isFromCurrentUser: true))
+            MessageView(message: MessageModel(content: "hello world", fromUser: "viv", time: Date(timeIntervalSince1970: TimeInterval(TimeInterval(NSDate().timeIntervalSince1970)))))
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("fromCurrentUserPreview")

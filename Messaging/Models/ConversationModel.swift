@@ -6,9 +6,17 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-struct Conversation: Identifiable {
-    var id: String
-    var user: String
-    var lastMessage: String
+struct ConversationModel: Identifiable, Codable {
+    @DocumentID var id: String?
+    var users: [String]
+    var messages: [MessageModel]
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case users
+        case messages
+    }
 }
