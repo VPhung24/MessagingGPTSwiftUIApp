@@ -13,8 +13,8 @@ struct ConversationsListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.conversations) { conversation in
-                    NavigationLink(destination: ChatView(conversation: conversation)) {
+                ForEach(viewModel.messages, id: \.first?.id) { conversation in
+                    NavigationLink(destination: ChatView(message: conversation)) {
                         HStack(spacing: 12) {
                             Image(systemName: "person.crop.circle.fill")
                                 .resizable()
@@ -23,10 +23,11 @@ struct ConversationsListView: View {
                                 .clipShape(Circle())
 
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(conversation.users.last ?? "name")
+                                Text(conversation.first?.toConversationName ?? "convo name")
                                     .font(.headline)
 
-                                Text(conversation.messages.last?.content ?? "")
+//                                Text(conversation.messages.last?.content ?? "")
+                                Text(conversation.last?.content ?? "last message")
                                     .font(.footnote)
                                     .foregroundColor(.gray)
                                     .lineLimit(1)

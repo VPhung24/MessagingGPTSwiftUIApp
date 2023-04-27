@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ChatView: View {
-    var conversation: ConversationModel
+    var message: [MessageModel]
 
     var body: some View {
         VStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
-                    ForEach(conversation.messages) { message in
+                    ForEach(message) { message in
                         MessageView(message: message)
                             .padding(EdgeInsets(top: 0,
                                                 leading: message.fromUser == "viv" ? 40 : 8,
@@ -30,12 +30,12 @@ struct ChatView: View {
 
             MessageInputView()
         }
-        .navigationBarTitle(conversation.users.last ?? "debug", displayMode: .inline)
+        .navigationBarTitle(message.first!.toConversationName, displayMode: .inline)
     }
 }
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(conversation: ConversationModel(users: ["viv", "jen"], messages: [MessageModel(content: "hello world", fromUser: "viv", time: Date(timeIntervalSince1970: TimeInterval(integerLiteral: 30))), MessageModel(content: "hello world", fromUser: "jen", time: Date(timeIntervalSince1970: TimeInterval(integerLiteral: 30)))]))
+        ChatView(message: [MessageModel(content: "hello", fromUser: "viv", toConversationName: "jen")])
     }
 }

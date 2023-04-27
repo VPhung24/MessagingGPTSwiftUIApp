@@ -47,12 +47,15 @@ struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             MessageView(message: MessageModel(content: "user user",
-                                              fromUser: "jen", time: Date(timeIntervalSince1970: TimeInterval(TimeInterval(NSDate().timeIntervalSince1970)))))
+                                              fromUser: "jen",
+                                              toConversationName: "viv"))
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("Default preview")
 
-            MessageView(message: MessageModel(content: "hello world", fromUser: "viv", time: Date(timeIntervalSince1970: TimeInterval(TimeInterval(NSDate().timeIntervalSince1970)))))
+            MessageView(message: MessageModel(content: "hello world",
+                                              fromUser: "viv",
+                                              toConversationName: "jen"))
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("fromCurrentUserPreview")

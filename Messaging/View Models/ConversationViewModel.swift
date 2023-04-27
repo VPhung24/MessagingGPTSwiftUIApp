@@ -11,8 +11,9 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class ConversationViewModel: ObservableObject {
-    @Published var users: [UserModel] = [UserModel]()
+    @Published var users = [UserModel]()
     @Published var conversations = [ConversationModel]()
+    @Published var messages = [[MessageModel]]()
     private var cancellables = Set<AnyCancellable>()
 
     private var db = Firestore.firestore()
@@ -36,26 +37,51 @@ class ConversationViewModel: ObservableObject {
     }
 
     func fetchConversation(for user: String) {
-        db.collection("conversations")
+        let conversationCollection = db.collection("conversations")
+
+        conversationCollection
             .whereField("users", arrayContains: user)
-            .addSnapshotListener { (querySnapshot, _) in
+            .getDocuments(completion: { (querySnapshot, _) in
                 guard let document = querySnapshot?.documents else {
                     print("no documnets")
                     return
                 }
 
                 self.conversations = document.compactMap({ (queryDocumentSnapshot) -> ConversationModel? in
-                    var messages = [MessageModel]()
-                    self.db.collection("conversation").document(queryDocumentSnapshot.documentID).collection("messages")
-                        .getDocuments { (querySnapshot, _) in
-                            messages = querySnapshot?.documents.compactMap({ (queryMessageSnapshot) -> MessageModel? in
-                                return try? queryMessageSnapshot.data(as: MessageModel.self)
-                            }) ?? []
-                        }
-                    print(messages)
-                    return ConversationModel(id: queryDocumentSnapshot.documentID, users: queryDocumentSnapshot.data()["users"] as! [String], messages: messages)
-                })
-            }
+                    do {
+                        let convo = try queryDocumentSnapshot.data(as: ConversationModel.self)
 
+                        guard let id = convo.id else {
+                            return nil
+                        }
+                        conversationCollection.document(id).collection("messages").getDocuments(completion: { (messsageQuerySnapshot, messageError) in
+                                guard let messagesDocuments = messsageQuerySnapshot?.documents else {
+                                    print("no message document with error: ", messageError ?? "no message error")
+                                    return
+                                }
+
+                                self.messages.append(
+                                    messagesDocuments.compactMap({ (messageSnapshot) -> MessageModel? in
+                                        do {
+                                            let theMessage = try messageSnapshot.data(as: MessageModel.self)
+                                            return theMessage
+                                        } catch {
+                                            print("error decoding message: ", error)
+                                            return nil
+                                        }
+                                    })
+
+                                )
+
+                            })
+
+                        return convo
+                    } catch {
+                        print(error)
+                        return nil
+                    }
+
+                })
+            })
     }
 }
