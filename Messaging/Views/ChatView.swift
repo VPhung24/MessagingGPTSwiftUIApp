@@ -8,34 +8,45 @@
 import SwiftUI
 
 struct ChatView: View {
-    var message: [MessageModel]
+    @State private var message = ""
+    @ObservedObject var viewModel = ChatViewModel()
+    let currentUserId: String
+    let conversationId: String
+
+    init(userId: String, conversationId: String) {
+        self.currentUserId = userId
+        self.conversationId = conversationId
+    }
 
     var body: some View {
         VStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
-                    ForEach(message) { message in
-                        MessageView(message: message)
-                            .padding(EdgeInsets(top: 0,
-                                                leading: message.fromUser == "viv" ? 40 : 8,
-                                                bottom: 0,
-                                                trailing: message.fromUser == "viv" ? 8 : 40))
+                    ForEach(viewModel.messages) { message in
+                        MessageView(message: message,
+                                    isFromCurrentUser: message.userId == currentUserId)
                     }
                 }
-                .padding(.top)
             }
-            .padding(.horizontal)
-            .background(Color(.systemGray6))
-            .edgesIgnoringSafeArea(.bottom)
+            .padding()
 
-            MessageInputView()
+            Spacer()
+
+            MessageInputView(message: $message) {
+                viewModel.sendMessage(messageContent: message, userId: currentUserId)
+                message = ""
+            }
+            .padding(.bottom, 8)
         }
-        .navigationBarTitle(message.first!.toConversationName, displayMode: .inline)
+        .navigationBarTitle("Chat", displayMode: .inline)
+        .onAppear {
+            viewModel.fetchMessages(with: conversationId)
+        }
     }
 }
 
-struct ChatView_Previews: PreviewProvider {
+ struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(message: [MessageModel(content: "hello", fromUser: "viv", toConversationName: "jen")])
+        ChatView(userId: "viv", conversationId: "ja7rfmcX42WX3nN17kJa")
     }
-}
+ }

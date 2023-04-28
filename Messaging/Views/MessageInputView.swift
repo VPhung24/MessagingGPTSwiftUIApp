@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct MessageInputView: View {
-    @State private var messageText = ""
+    @Binding var message: String
+    var sendMessage: () -> Void
 
     var body: some View {
         HStack {
-            TextField("Type a message...", text: $messageText)
+            TextField("Type a message...", text: $message)
                 .padding(8)
                 .background(Color(white: 0.95))
                 .cornerRadius(8)
@@ -24,19 +25,16 @@ struct MessageInputView: View {
                     .foregroundColor(.blue)
             }
             .padding(.trailing)
+            .disabled(message.trimmingCharacters(in: .whitespaces).isEmpty)
         }
         .padding(.bottom, 8)
-    }
-
-    func sendMessage() {
-        print("Sending message: \(messageText)")
-        // Replace this with the functionality to send the message to your backend service
-        messageText = ""
     }
 }
 
 struct MessageInputView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageInputView()
+        MessageInputView(message: .constant("hello")) {
+            print("insert")
+        }
     }
 }

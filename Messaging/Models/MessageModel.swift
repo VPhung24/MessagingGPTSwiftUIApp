@@ -6,21 +6,21 @@
 //
 
 import Foundation
-import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseFirestore
 
 struct MessageModel: Identifiable, Codable {
     @DocumentID var id: String?
     var content: String
-    var fromUser: String
-    var toConversationName: String
-    @ServerTimestamp var time: Timestamp?
+    var userId: String
+    var timestamp: Timestamp
+    var conversationId: String
 
     enum CodingKeys: String, CodingKey {
         case id
         case content
-        case fromUser
-        case toConversationName
-        case time
+        case userId
+        case timestamp
+        case conversationId
     }
 }

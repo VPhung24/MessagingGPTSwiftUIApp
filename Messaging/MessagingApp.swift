@@ -23,7 +23,7 @@ struct YourApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ConversationsListView()
+            ConversationsListView(userId: "viv")
         }
     }
 }
