@@ -11,12 +11,16 @@ import FirebaseFirestoreSwift
 
 struct ConversationModel: Identifiable, Codable {
     @DocumentID var id: String?
-    var users: [String]
-    var messages: [MessageModel]
+    var participants: [String]
+    var name: String
+    var lastMessage: String
+    @ServerTimestamp var timestamp: Timestamp?
 
     enum CodingKeys: String, CodingKey {
         case id
-        case users
-        case messages
+        case participants
+        case name
+        case lastMessage
+        case timestamp
     }
 }

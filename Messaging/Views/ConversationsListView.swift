@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct ConversationsListView: View {
-    @StateObject var viewModel = ConversationViewModel()
+    @ObservedObject var viewModel = ConversationsViewModel()
+    let userId: String
 
     var body: some View {
         NavigationView {
             List {
                 ForEach(viewModel.conversations) { conversation in
-                    NavigationLink(destination: ChatView(conversation: conversation)) {
+                    NavigationLink(destination: ChatView(userId: userId, conversationId: conversation.id ?? "")) {
                         HStack(spacing: 12) {
                             Image(systemName: "person.crop.circle.fill")
                                 .resizable()
@@ -23,27 +24,44 @@ struct ConversationsListView: View {
                                 .clipShape(Circle())
 
                             VStack(alignment: .leading, spacing: 4) {
-                                Text(conversation.users.last ?? "name")
+                                Text(conversation.name)
                                     .font(.headline)
 
-                                Text(conversation.messages.last?.content ?? "")
+                                Text(conversation.lastMessage)
                                     .font(.footnote)
                                     .foregroundColor(.gray)
                                     .lineLimit(1)
                             }
                         }
-                        .padding(.vertical, 8)
                     }
                 }
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("Conversations")
+            .onAppear {
+                viewModel.fetchConversations(userId: userId)
+            }
         }
+    }
+}
+
+struct ConversationRow: View {
+    var conversation: ConversationModel
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(conversation.name)
+                .font(.headline)
+            Text(conversation.lastMessage)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+        }
+        .padding(.vertical)
     }
 }
 
 struct ConversationsListView_Previews: PreviewProvider {
     static var previews: some View {
-        ConversationsListView()
+        ConversationsListView(userId: "viv")
     }
 }
