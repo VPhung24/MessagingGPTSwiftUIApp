@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct MessageInputView: View {
-    @Binding var message: String
-    var sendMessage: () -> Void
+    @State var message: String = ""
+    var sendMessage: (String) -> Void
+    var sendMessageWithImage: (_ message: String, _ image: UIImage) -> Void
+
+    @State private var showImagePicker = false
+    @State private var inputImage: UIImage?
 
     var body: some View {
         HStack {
@@ -19,7 +23,19 @@ struct MessageInputView: View {
                 .cornerRadius(8)
                 .padding(.horizontal)
 
-            Button(action: sendMessage) {
+            Button(action: {
+                showImagePicker.toggle()
+            }) {
+                Image(systemName: "photo")
+                    .foregroundColor(.primary)
+            }
+
+            Button(action: {
+                if !message.trimmingCharacters(in: .whitespaces).isEmpty {
+                    sendMessage(message)
+                    message = ""
+                }
+            }) {
                 Image(systemName: "paperplane.fill")
                     .font(.system(size: 22))
                     .foregroundColor(.blue)
@@ -28,13 +44,24 @@ struct MessageInputView: View {
             .disabled(message.trimmingCharacters(in: .whitespaces).isEmpty)
         }
         .padding(.bottom, 8)
+        .sheet(isPresented: $showImagePicker, onDismiss: {
+            if let inputImage = inputImage {
+                sendMessageWithImage(message, inputImage)
+                message = ""
+            }
+        }) {
+            ImagePicker(image: $inputImage)
+        }
     }
 }
 
 struct MessageInputView_Previews: PreviewProvider {
     static var previews: some View {
-        MessageInputView(message: .constant("hello")) {
-            print("insert")
+        MessageInputView { _ in
+            print("send message")
+        } sendMessageWithImage: { (_, _) in
+            print("open image view")
         }
+
     }
 }

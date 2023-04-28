@@ -9,12 +9,13 @@ import Foundation
 import FirebaseFirestoreSwift
 import FirebaseFirestore
 
-struct MessageModel: Identifiable, Codable {
+struct MessageModel: Identifiable, Codable, Equatable {
     @DocumentID var id: String?
     var content: String
     var userId: String
     var timestamp: Timestamp
     var conversationId: String
+    var photoURL: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -22,5 +23,6 @@ struct MessageModel: Identifiable, Codable {
         case userId
         case timestamp
         case conversationId
+        case photoURL
     }
 }

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import FirebaseFirestore
+import Kingfisher
 
 struct MessageView: View {
     let message: MessageModel
@@ -15,22 +16,26 @@ struct MessageView: View {
 
     var body: some View {
         HStack(alignment: .bottom, spacing: 12) {
-            if !isFromCurrentUser {
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-            } else {
+            if isFromCurrentUser {
                 Spacer()
             }
 
             VStack(alignment: isFromCurrentUser ? .trailing : .leading, spacing: 4) {
-                Text(message.content)
-                    .padding(10)
-                    .background(isFromCurrentUser ? Color.blue : Color(.systemGray5))
-                    .foregroundColor(isFromCurrentUser ? .white : .black)
-                    .cornerRadius(16, corners: isFromCurrentUser ? [.topLeft, .topRight, .bottomLeft] : [.topLeft, .topRight, .bottomRight])
+                if let photoURL = message.photoURL, let url = URL(string: photoURL) {
+                    KFImage(url)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 200, maxHeight: 200)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+
+                if message.content != "" {
+                    Text(message.content)
+                        .padding(10)
+                        .background(isFromCurrentUser ? Color.blue : Color(.systemGray5))
+                        .foregroundColor(isFromCurrentUser ? .white : .black)
+                        .cornerRadius(16, corners: isFromCurrentUser ? [.topLeft, .topRight, .bottomLeft] : [.topLeft, .topRight, .bottomRight])
+                }
 
                 Text(timestampToString(message.timestamp))
                     .font(.caption2)

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ChatView: View {
-    @State private var message = ""
     @ObservedObject var viewModel = ChatViewModel()
     let currentUserId: String
     let conversationId: String
@@ -20,27 +19,40 @@ struct ChatView: View {
 
     var body: some View {
         VStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 8) {
-                    ForEach(viewModel.messages) { message in
-                        MessageView(message: message,
-                                    isFromCurrentUser: message.userId == currentUserId)
+            ScrollViewReader { scrollViewProxy in
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(alignment: .leading, spacing: 8) {
+                        ForEach(viewModel.messages) { message in
+                            MessageView(message: message, isFromCurrentUser: message.userId == currentUserId)
+                        }
+                    }
+                    .onChange(of: viewModel.messages) { _ in
+                        scrollToBottom(scrollViewProxy)
                     }
                 }
             }
-            .padding()
+            .padding(.horizontal)
 
             Spacer()
 
-            MessageInputView(message: $message) {
+            MessageInputView { message in
                 viewModel.sendMessage(messageContent: message, userId: currentUserId)
-                message = ""
+            } sendMessageWithImage: { (message, image) in
+                viewModel.sendMessageWithImage(messageContent: message, userId: currentUserId, image)
             }
             .padding(.bottom, 8)
         }
         .navigationBarTitle("Chat", displayMode: .inline)
         .onAppear {
             viewModel.fetchMessages(with: conversationId)
+        }
+    }
+
+    private func scrollToBottom(_ proxy: ScrollViewProxy) {
+        if let lastMessage = viewModel.messages.last {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                proxy.scrollTo(lastMessage.id, anchor: .bottom)
+            }
         }
     }
 }
