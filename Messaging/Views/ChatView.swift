@@ -24,6 +24,7 @@ struct ChatView: View {
                     LazyVStack(alignment: .leading, spacing: 8) {
                         ForEach(viewModel.messages) { message in
                             MessageView(message: message, isFromCurrentUser: message.userId == currentUserId)
+
                         }
                     }
                     .onChange(of: viewModel.messages) { _ in
@@ -59,6 +60,8 @@ struct ChatView: View {
 
  struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(userId: "viv", conversationId: "ja7rfmcX42WX3nN17kJa")
+        NavigationView {
+            ChatView(userId: "viv", conversationId: "ja7rfmcX42WX3nN17kJa")
+        }
     }
  }

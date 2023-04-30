@@ -15,38 +15,38 @@ struct MessageView: View {
     let isFromCurrentUser: Bool
 
     var body: some View {
-        HStack(alignment: .bottom, spacing: 12) {
+        HStack(alignment: .bottom) {
             if isFromCurrentUser {
                 Spacer()
             }
 
-            VStack(alignment: isFromCurrentUser ? .trailing : .leading, spacing: 4) {
+            VStack(alignment: isFromCurrentUser ? .trailing : .leading) {
                 if let photoURL = message.photoURL, let url = URL(string: photoURL) {
-                    KFImage(url)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 200, maxHeight: 200)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    ChatBubble(direction: isFromCurrentUser ? .right : .left) {
+                        KFImage(url)
+                            .resizable()
+                            .frame(width: UIScreen.main.bounds.width - 70,
+                                   height: 200).aspectRatio(contentMode: .fill)
+                    }
                 }
 
                 if message.content != "" {
-                    Text(message.content)
-                        .padding(10)
-                        .background(isFromCurrentUser ? Color.blue : Color(.systemGray5))
-                        .foregroundColor(isFromCurrentUser ? .white : .black)
-                        .cornerRadius(16, corners: isFromCurrentUser ? [.topLeft, .topRight, .bottomLeft] : [.topLeft, .topRight, .bottomRight])
+                    ChatBubble(direction: isFromCurrentUser ? .right : .left) {
+                        Text(message.content)
+                            .padding(EdgeInsets(top: 10,
+                                                leading: isFromCurrentUser ? 15 : 20,
+                                                bottom: 10,
+                                                trailing: isFromCurrentUser ? 20 : 15))
+                            .foregroundColor(Color.white)
+                            .background(Color.blue)
+                    }
                 }
-
-                Text(timestampToString(message.timestamp))
-                    .font(.caption2)
-                    .foregroundColor(.gray)
             }
 
             if !isFromCurrentUser {
                 Spacer()
             }
         }
-        .padding(.vertical, 4)
     }
 
     private func timestampToString(_ timestamp: Timestamp) -> String {
@@ -69,6 +69,16 @@ struct MessageView_Previews: PreviewProvider {
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("fromCurrentUserPreview")
+
+            MessageView(message: MessageModel(content: "hello jen", userId: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa", photoURL: "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__340.jpg"), isFromCurrentUser: true)
+                .previewLayout(PreviewLayout.sizeThatFits)
+                .padding()
+                .previewDisplayName("imagePreviewWText")
+
+            MessageView(message: MessageModel(content: "", userId: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa", photoURL: "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__340.jpg"), isFromCurrentUser: false)
+                .previewLayout(PreviewLayout.sizeThatFits)
+                .padding()
+                .previewDisplayName("imagePreviewWText")
         }
     }
 }
