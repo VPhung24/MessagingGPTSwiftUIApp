@@ -22,7 +22,7 @@ class ConversationListViewModel: ObservableObject {
     @Published var showConversationView: Bool = false
     @Published var showProfileView: Bool = false
 
-    @Published var showSelectedUser: String?
+    @Published var showConversationId: String?
 
     func fetchConversations(userId: String) {
         self.userId = userId
@@ -45,12 +45,15 @@ class ConversationListViewModel: ObservableObject {
     }
 
     func startConversation(with frenUserId: String) {
-        if conversations.contains(where: { convo in
+        let convo = conversations.filter { convo in
             convo.participants.contains { username in
                 username == frenUserId
             }
-        }) {
-            // open convo
+        }.first
+
+        if let frenConvo = convo {
+            self.showConversationId = frenConvo.id
+            self.showConversationView = true
         } else {
             createNewConversation(with: frenUserId)
         }
@@ -64,8 +67,17 @@ class ConversationListViewModel: ObservableObject {
         }
         let newConversation = ConversationModel(participants: [userId, frenUserId], name: frenUserId, lastMessage: "")
         do {
-            try db.collection("conversations")
+            let newConvoDocReference = try db.collection("conversations")
                 .addDocument(from: newConversation)
+            newConvoDocReference.getDocument(as: ConversationModel.self) { result in
+                switch result {
+                case .success(let success):
+                    self.showConversationId = success.id
+                    self.showConversationView = true
+                case .failure(let failure):
+                    print("error failed to create new conversation: \(failure.localizedDescription)")
+                }
+            }
         } catch {
             print("error starting new conversation: \(error.localizedDescription)")
         }

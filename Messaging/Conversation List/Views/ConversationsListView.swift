@@ -9,13 +9,12 @@ import SwiftUI
 
 struct ConversationsListView: View {
     @ObservedObject var viewModel = ConversationListViewModel()
-    @State var showConversationId: String?
     let userId: String
 
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: LazyView { ConversationView(userId: userId, conversationId: showConversationId ?? "") },
+                NavigationLink(destination: LazyView { ConversationView(userId: userId, conversationId: viewModel.showConversationId!) },
                                isActive: $viewModel.showConversationView) {
                     EmptyView()
                 }
@@ -70,7 +69,10 @@ struct ConversationsListView: View {
                     }
                 }
                 .sheet(isPresented: $viewModel.showSearchView) {
-                    NewConversationView(showNewConversationView: $viewModel.showSearchView, selectedUser: $viewModel.showSelectedUser)
+                    NewConversationView { username in
+                        viewModel.showSearchView = false
+                        viewModel.startConversation(with: username)
+                    }
                         .padding(.top, 10)
                 }
                 .sheet(isPresented: $viewModel.showProfileView) {
