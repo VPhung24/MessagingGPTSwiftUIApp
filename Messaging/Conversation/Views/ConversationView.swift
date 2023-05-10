@@ -1,5 +1,5 @@
 //
-//  ChatView.swift
+//  ConversationView.swift
 //  Messaging
 //
 //  Created by Vivian Phung on 4/11/23.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ChatView: View {
-    @ObservedObject var viewModel = ChatViewModel()
+struct ConversationView: View {
+    @ObservedObject var viewModel = ConversationViewModel()
     let currentUserId: String
     let conversationId: String
 
@@ -60,7 +60,7 @@ struct ChatView: View {
  struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ChatView(userId: "viv", conversationId: "ja7rfmcX42WX3nN17kJa")
+            ConversationView(userId: "viv", conversationId: "ja7rfmcX42WX3nN17kJa")
         }
     }
  }

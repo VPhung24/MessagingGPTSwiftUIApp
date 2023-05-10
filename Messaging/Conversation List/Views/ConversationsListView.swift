@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ConversationsListView: View {
-    @ObservedObject var viewModel = ConversationsViewModel()
+    @ObservedObject var viewModel = ConversationListViewModel()
     @State var showSearchView: Bool = false
     @State var showConversationId: String?
     @State var showConversation: Bool = false
@@ -17,13 +17,13 @@ struct ConversationsListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: ChatView(userId: userId, conversationId: showConversationId ?? ""), isActive: $showConversation) {
+                NavigationLink(destination: ConversationView(userId: userId, conversationId: showConversationId ?? ""), isActive: $showConversation) {
                     EmptyView()
                 }
 
                 List {
                     ForEach(viewModel.conversations) { conversation in
-                        NavigationLink(destination: ChatView(userId: userId, conversationId: conversation.id ?? "")) {
+                        NavigationLink(destination: ConversationView(userId: userId, conversationId: conversation.id ?? "")) {
                             HStack(spacing: 12) {
                                 Image(systemName: "person.crop.circle.fill")
                                     .resizable()

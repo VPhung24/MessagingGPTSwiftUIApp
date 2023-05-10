@@ -1,5 +1,5 @@
 //
-//  ConversationsViewModel.swift
+//  ConversationListViewModel.swift
 //  Messaging
 //
 //  Created by Vivian Phung on 4/17/23.
@@ -12,7 +12,7 @@ import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-class ConversationsViewModel: ObservableObject {
+class ConversationListViewModel: ObservableObject {
     @Published var conversations = [ConversationModel]()
     private var listener: ListenerRegistration?
     private let db = Firestore.firestore()
