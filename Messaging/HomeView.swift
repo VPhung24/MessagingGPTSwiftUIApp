@@ -12,8 +12,8 @@ struct HomeView: View {
     @StateObject var authViewModel = AuthViewModel()
 
     var body: some View {
-        if authViewModel.isSignedIn {
-            ConversationsListView(userId: authViewModel.username)
+        if authViewModel.isSignedIn, let uuid = authViewModel.appUserUUID {
+            ConversationsListView(userId: uuid)
         } else {
             LoginView()
                 .environmentObject(authViewModel)

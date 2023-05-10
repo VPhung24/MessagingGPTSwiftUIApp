@@ -12,7 +12,7 @@ import AuthenticationServices
 
 class AuthViewModel: NSObject, ObservableObject {
     @Published var isSignedIn = false
-    @Published var username: String = "no display name"
+    @Published var appUserUUID: String?
 
     let appleIDProvider = ASAuthorizationAppleIDProvider()
 
@@ -23,6 +23,7 @@ class AuthViewModel: NSObject, ObservableObject {
             switch credentialState {
             case .authorized:
                 DispatchQueue.main.async {
+                    self.appUserUUID = KeychainItem.currentUserIdentifier
                     self.isSignedIn = true
                 }
             case .revoked, .notFound:
@@ -51,12 +52,13 @@ extension AuthViewModel: ASAuthorizationControllerDelegate {
                                                       rawNonce: nil)
 
             Auth.auth().signIn(with: credential) { (success, error) in
-                guard success != nil else {
-                    print(error?.localizedDescription ?? "error loggin in")
+                guard let uuid = success?.user.uid else {
+                    print(error?.localizedDescription ?? "error logging in")
                     return
                 }
 
-                self.saveUserInKeychain(appleIDCredential.user)
+                self.saveUserInKeychain(uuid)
+                self.appUserUUID = uuid
                 self.isSignedIn = true
             }
         }

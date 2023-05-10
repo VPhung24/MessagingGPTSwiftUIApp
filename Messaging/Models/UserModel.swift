@@ -9,12 +9,11 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct UserModel: Identifiable, Codable {
-    @DocumentID var username: String?
+struct UserModel: Identifiable, Codable, Hashable {
+    @DocumentID var id: String?
+    var username: String
     var first: String
     var last: String
-
-    var id: String? { username }
 
     enum CodingKeys: String, CodingKey {
         case username
