@@ -51,7 +51,7 @@ extension AuthViewModel: ASAuthorizationControllerDelegate {
                                                       rawNonce: nil)
 
             Auth.auth().signIn(with: credential) { (success, error) in
-                guard let success = success else {
+                guard success != nil else {
                     print(error?.localizedDescription ?? "error loggin in")
                     return
                 }

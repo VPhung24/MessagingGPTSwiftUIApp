@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  Messaging
 //
 //  Created by Vivian Phung on 5/9/23.
@@ -18,11 +18,5 @@ struct HomeView: View {
             LoginView()
                 .environmentObject(authViewModel)
         }
-    }
-}
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
     }
 }

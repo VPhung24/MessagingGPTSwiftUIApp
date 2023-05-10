@@ -41,6 +41,23 @@ struct ConversationsListView: View {
             .onAppear {
                 viewModel.fetchConversations(userId: userId)
             }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        print("compose message")
+                        print("userId: \(userId)")
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        print("compose message")
+                    } label: {
+                        Image(systemName: "person.fill")
+                    }
+                }
+            }
         }
     }
 }
