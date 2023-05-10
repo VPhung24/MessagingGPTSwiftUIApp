@@ -24,7 +24,6 @@ struct ConversationView: View {
                     LazyVStack(alignment: .leading, spacing: 8) {
                         ForEach(viewModel.messages) { message in
                             MessageView(message: message, isFromCurrentUser: message.userId == currentUserId)
-
                         }
                     }
                     .onChange(of: viewModel.messages) { _ in

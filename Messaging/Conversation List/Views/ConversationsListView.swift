@@ -9,21 +9,20 @@ import SwiftUI
 
 struct ConversationsListView: View {
     @ObservedObject var viewModel = ConversationListViewModel()
-    @State var showSearchView: Bool = false
     @State var showConversationId: String?
-    @State var showConversation: Bool = false
     let userId: String
 
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: ConversationView(userId: userId, conversationId: showConversationId ?? ""), isActive: $showConversation) {
+                NavigationLink(destination: LazyView { ConversationView(userId: userId, conversationId: showConversationId ?? "") },
+                               isActive: $viewModel.showConversationView) {
                     EmptyView()
                 }
 
                 List {
                     ForEach(viewModel.conversations) { conversation in
-                        NavigationLink(destination: ConversationView(userId: userId, conversationId: conversation.id ?? "")) {
+                        NavigationLink(destination: LazyView { ConversationView(userId: userId, conversationId: conversation.id ?? "") }) {
                             HStack(spacing: 12) {
                                 Image(systemName: "person.crop.circle.fill")
                                     .resizable()
@@ -55,7 +54,7 @@ struct ConversationsListView: View {
                             print("compose message")
                             print("userId: \(userId)")
 
-                            self.showSearchView = true
+                            viewModel.showSearchView = true
                         } label: {
                             Image(systemName: "square.and.pencil")
                         }
@@ -63,13 +62,19 @@ struct ConversationsListView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
                             print("compose message")
+
+                            viewModel.showProfileView = true
                         } label: {
                             Image(systemName: "person.fill")
                         }
                     }
                 }
-                .sheet(isPresented: $showSearchView) {
-                    NewConversationView()
+                .sheet(isPresented: $viewModel.showSearchView) {
+                    NewConversationView(showNewConversationView: $viewModel.showSearchView, selectedUser: $viewModel.showSelectedUser)
+                        .padding(.top, 10)
+                }
+                .sheet(isPresented: $viewModel.showProfileView) {
+                    UserProfileView()
                         .padding(.top, 10)
                 }
             }

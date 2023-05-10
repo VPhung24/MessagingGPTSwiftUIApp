@@ -18,6 +18,12 @@ class ConversationListViewModel: ObservableObject {
     private let db = Firestore.firestore()
     private var userId: String?
 
+    @Published var showSearchView: Bool = false
+    @Published var showConversationView: Bool = false
+    @Published var showProfileView: Bool = false
+
+    @Published var showSelectedUser: String?
+
     func fetchConversations(userId: String) {
         self.userId = userId
         listener = db.collection("conversations")
@@ -36,6 +42,33 @@ class ConversationListViewModel: ObservableObject {
                     } ?? []
                 }
             }
+    }
+
+    func startConversation(with frenUserId: String) {
+        if conversations.contains(where: { convo in
+            convo.participants.contains { username in
+                username == frenUserId
+            }
+        }) {
+            // open convo
+        } else {
+            createNewConversation(with: frenUserId)
+        }
+    }
+
+    func createNewConversation(with frenUserId: String) {
+        guard let userId = userId else {
+            // todo: userid should never be nil
+            print("userid does not exist")
+            return
+        }
+        let newConversation = ConversationModel(participants: [userId, frenUserId], name: frenUserId, lastMessage: "")
+        do {
+            try db.collection("conversations")
+                .addDocument(from: newConversation)
+        } catch {
+            print("error starting new conversation: \(error.localizedDescription)")
+        }
     }
 
     deinit {
