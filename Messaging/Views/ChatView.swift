@@ -32,7 +32,6 @@ struct ChatView: View {
                     }
                 }
             }
-            .padding(.horizontal)
 
             Spacer()
 

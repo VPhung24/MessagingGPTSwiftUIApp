@@ -121,7 +121,7 @@ struct Demo: View {
                 }
                 ChatBubble(direction: .right) {
                     Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut semper quam. Phasellus non mauris sem. Donec sed fermentum eros. Donec pretium nec turpis a semper. ")
-                        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 15))
+                        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
                         .foregroundColor(Color.white)
                         .background(Color.blue)
                 }

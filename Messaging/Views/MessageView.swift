@@ -21,12 +21,14 @@ struct MessageView: View {
             }
 
             VStack(alignment: isFromCurrentUser ? .trailing : .leading) {
+
                 if let photoURL = message.photoURL, let url = URL(string: photoURL) {
                     ChatBubble(direction: isFromCurrentUser ? .right : .left) {
                         KFImage(url)
                             .resizable()
-                            .frame(width: UIScreen.main.bounds.width - 70,
-                                   height: 200).aspectRatio(contentMode: .fill)
+                            .frame(width: UIScreen.main.bounds.width - 90,
+                                   height: 200)
+                            .aspectRatio(contentMode: .fill)
                     }
                 }
 
@@ -75,7 +77,7 @@ struct MessageView_Previews: PreviewProvider {
                 .padding()
                 .previewDisplayName("imagePreviewWText")
 
-            MessageView(message: MessageModel(content: "", userId: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa", photoURL: "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__340.jpg"), isFromCurrentUser: false)
+            MessageView(message: MessageModel(content: "hello world", userId: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa", photoURL: "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__340.jpg"), isFromCurrentUser: false)
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("imagePreviewWText")
