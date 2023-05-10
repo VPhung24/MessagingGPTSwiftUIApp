@@ -175,12 +175,28 @@
 		08E3A8C72A0C0562001A7D07 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				08E3A8CF2A0C137E001A7D07 /* View Models */,
+				08E3A8CE2A0C1372001A7D07 /* Views */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		08E3A8CE2A0C1372001A7D07 /* Views */ = {
+			isa = PBXGroup;
+			children = (
 				08E3A8C52A0C052A001A7D07 /* SearchView.swift */,
 				08E3A8C82A0C0596001A7D07 /* UserRowView.swift */,
 				08E3A8CA2A0C05C1001A7D07 /* NewConversationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		08E3A8CF2A0C137E001A7D07 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
 				08E3A8CC2A0C0C7A001A7D07 /* NewConversationViewModel.swift */,
 			);
-			path = Search;
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 		08FAD21A29EDCAD000D092EE /* Views */ = {
