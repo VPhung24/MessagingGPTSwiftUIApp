@@ -18,7 +18,7 @@ class ConversationListViewModel: ObservableObject {
     private let db = Firestore.firestore()
     private var userId: String?
 
-    @Published var showSearchView: Bool = false
+    @Published var showNewConversationView: Bool = false
     @Published var showConversationView: Bool = false
     @Published var showProfileView: Bool = false
 

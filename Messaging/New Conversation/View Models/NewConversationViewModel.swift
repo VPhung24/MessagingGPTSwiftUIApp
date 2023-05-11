@@ -38,14 +38,6 @@ class NewConversationViewModel: ObservableObject {
             }
     }
 
-    func getConversationId() -> String {
-        return ""
-    }
-
-    func createConversation() {
-
-    }
-
     var filteredUsers: [UserModel] {
         if searchText.isEmpty {
             return users

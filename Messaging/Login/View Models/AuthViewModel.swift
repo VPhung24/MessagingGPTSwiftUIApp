@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 import AuthenticationServices
 
 class AuthViewModel: NSObject, ObservableObject {
@@ -46,9 +47,9 @@ class AuthViewModel: NSObject, ObservableObject {
 
 extension AuthViewModel: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential, let identityToken = appleIDCredential.identityToken {
             let credential = OAuthProvider.credential(withProviderID: "apple.com",
-                                                      idToken: String(data: appleIDCredential.identityToken!, encoding: .utf8)!,
+                                                      idToken: String(data: identityToken, encoding: .utf8)!,
                                                       rawNonce: nil)
 
             Auth.auth().signIn(with: credential) { (success, error) in

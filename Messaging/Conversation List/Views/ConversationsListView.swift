@@ -53,7 +53,7 @@ struct ConversationsListView: View {
                             print("compose message")
                             print("userId: \(userId)")
 
-                            viewModel.showSearchView = true
+                            viewModel.showNewConversationView = true
                         } label: {
                             Image(systemName: "square.and.pencil")
                         }
@@ -68,9 +68,9 @@ struct ConversationsListView: View {
                         }
                     }
                 }
-                .sheet(isPresented: $viewModel.showSearchView) {
+                .sheet(isPresented: $viewModel.showNewConversationView) {
                     NewConversationView { username in
-                        viewModel.showSearchView = false
+                        viewModel.showNewConversationView = false
                         viewModel.startConversation(with: username)
                     }
                         .padding(.top, 10)
