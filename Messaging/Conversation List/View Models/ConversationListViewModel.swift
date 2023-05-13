@@ -16,7 +16,6 @@ class ConversationListViewModel: ObservableObject {
     @Published var conversations = [ConversationModel]()
     private var listener: ListenerRegistration?
     private let db = Firestore.firestore()
-    private var userId: String?
 
     @Published var showNewConversationView: Bool = false
     @Published var showConversationView: Bool = false
@@ -24,10 +23,9 @@ class ConversationListViewModel: ObservableObject {
 
     @Published var showConversationId: String?
 
-    func fetchConversations(userId: String) {
-        self.userId = userId
+    func fetchConversations(username: String) {
         listener = db.collection("conversations")
-            .whereField("participants", arrayContains: userId)
+            .whereField("participants", arrayContains: username)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     print("Error fetching conversations: \(error)")
@@ -44,7 +42,7 @@ class ConversationListViewModel: ObservableObject {
             }
     }
 
-    func startConversation(with frenUserId: String) {
+    func startConversation(with frenUserId: String, and currentUsername: String) {
         let convo = conversations.filter { convo in
             convo.participants.contains { username in
                 username == frenUserId
@@ -55,17 +53,12 @@ class ConversationListViewModel: ObservableObject {
             self.showConversationId = frenConvo.id
             self.showConversationView = true
         } else {
-            createNewConversation(with: frenUserId)
+            createNewConversation(with: frenUserId, and: currentUsername)
         }
     }
 
-    func createNewConversation(with frenUserId: String) {
-        guard let userId = userId else {
-            // todo: userid should never be nil
-            print("userid does not exist")
-            return
-        }
-        let newConversation = ConversationModel(participants: [userId, frenUserId], name: frenUserId, lastMessage: "")
+    func createNewConversation(with frenUserId: String, and currentUsername: String) {
+        let newConversation = ConversationModel(participants: [currentUsername, frenUserId], name: frenUserId, lastMessage: "")
         do {
             let newConvoDocReference = try db.collection("conversations")
                 .addDocument(from: newConversation)

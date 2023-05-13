@@ -8,41 +8,59 @@
 import SwiftUI
 
 struct UserProfileView: View {
-    @StateObject var viewModel = UserProfileViewModel()
-    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var user: UserModel
 
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Username")) {
-                    TextField("Username", text: $viewModel.username)
-                }
-
-                Section(header: Text("First Name")) {
-                    TextField("First Name", text: $viewModel.firstName)
-                }
-
-                Section(header: Text("Last Name")) {
-                    TextField("Last Name", text: $viewModel.lastName)
-                }
-
+                TextField("First Name", text: $user.first.toUnwrapped(defaultValue: ""))
+                    .disabled(!user.editMode)
+                TextField("Last Name", text: $user.last.toUnwrapped(defaultValue: ""))
+                    .disabled(!user.editMode)
+                TextField("Username", text: $user.username.toUnwrapped(defaultValue: ""))
+                    .disabled(!user.editMode)
                 Button(action: {
-                    viewModel.saveUserData()
-                    presentationMode.wrappedValue.dismiss()
+                    if user.editMode {
+                        user.updateFirestore()
+                   } else {
+                        user.editMode = true
+                    }
                 }) {
-                    Text("Save")
+                    Text(user.editMode ? "Save" : "Edit")
                 }
             }
-            .navigationTitle("Edit Profile")
+
         }
-        .onAppear(perform: {
-            viewModel.fetchUserData()
-        })
+        .navigationTitle(user.editMode ? "Edit Profile" : "Profile")
+
     }
 }
+
+// Form {
+//    Section {
+//        TextField("First Name", text: $viewModel.firstName)
+//            .disabled(!viewModel.editMode)
+//        TextField("Last Name", text: $viewModel.lastName)
+//            .disabled(!viewModel.editMode)
+//
+//        TextField("Username", text: $viewModel.username)
+//            .disabled(!viewModel.editMode)
+//    }
+//    Button(action: {
+//        if viewModel.editMode {
+//            viewModel.saveUserData()
+//            presentationMode.wrappedValue.dismiss()
+//        } else {
+//            viewModel.editMode = true
+//        }
+//    }) {
+//        Text(viewModel.editMode ? "Save" : "Edit")
+//    }
+// }
 
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView()
+            .environmentObject(UserModel(id: "sasdasd", username: "viv", first: "sadasd", last: "asdd"))
     }
 }

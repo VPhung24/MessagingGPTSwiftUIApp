@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseStorage
@@ -51,12 +50,12 @@ class ConversationViewModel: ObservableObject {
 
     }
 
-    func sendMessage(messageContent: String, userId: String) {
+    func sendMessage(messageContent: String, username: String) {
         guard let conversationId = conversationId else {
             return
         }
         let message = MessageModel(content: messageContent,
-                                   userId: userId,
+                                   username: username,
                                    timestamp: Timestamp(date: Date()),
                                    conversationId: conversationId)
 
@@ -102,14 +101,14 @@ class ConversationViewModel: ObservableObject {
         }
     }
 
-    func sendMessageWithImage(messageContent: String, userId: String, _ image: UIImage) {
+    func sendMessageWithImage(messageContent: String, username: String, _ image: UIImage) {
         guard let conversationId = conversationId else {
             return
         }
 
         uploadImage(image) { [weak self] photoURL in
             guard let self = self, let photoURL = photoURL else { return }
-            let message = MessageModel(content: messageContent, userId: userId, timestamp: Timestamp(date: Date()), conversationId: conversationId, photoURL: photoURL)
+            let message = MessageModel(content: messageContent, username: username, timestamp: Timestamp(date: Date()), conversationId: conversationId, photoURL: photoURL)
 
             do {
                 try self.db.collection("conversations")

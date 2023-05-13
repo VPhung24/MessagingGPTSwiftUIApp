@@ -62,22 +62,22 @@ struct MessageView: View {
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            MessageView(message: MessageModel(content: "hello viv", userId: "jen", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJas"), isFromCurrentUser: false)
+            MessageView(message: MessageModel(content: "hello viv", username: "jen", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJas"), isFromCurrentUser: false)
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("Default preview")
 
-            MessageView(message: MessageModel(content: "hello jen", userId: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa"), isFromCurrentUser: true)
+            MessageView(message: MessageModel(content: "hello jen", username: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa"), isFromCurrentUser: true)
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("fromCurrentUserPreview")
 
-            MessageView(message: MessageModel(content: "hello jen", userId: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa", photoURL: "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__340.jpg"), isFromCurrentUser: true)
+            MessageView(message: MessageModel(content: "hello jen", username: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa", photoURL: "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__340.jpg"), isFromCurrentUser: true)
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("imagePreviewWText")
 
-            MessageView(message: MessageModel(content: "hello world", userId: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa", photoURL: "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__340.jpg"), isFromCurrentUser: false)
+            MessageView(message: MessageModel(content: "hello world", username: "viv", timestamp: Timestamp(date: Date()), conversationId: "ja7rfmcX42WX3nN17kJa", photoURL: "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492__340.jpg"), isFromCurrentUser: false)
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
                 .previewDisplayName("imagePreviewWText")

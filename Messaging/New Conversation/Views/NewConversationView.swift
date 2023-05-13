@@ -17,9 +17,9 @@ struct NewConversationView: View {
             List {
                 ForEach(viewModel.filteredUsers, id: \.self) { user in
                     Button {
-                        dismissAction(user.username)
+                        dismissAction(user.username!)
                     } label: {
-                        UserRowView(name: user.first, username: user.username)
+                        UserRowView(name: user.first!, username: user.username!)
                     }
                 }
             }

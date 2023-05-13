@@ -12,7 +12,7 @@ import FirebaseFirestore
 struct MessageModel: Identifiable, Codable, Equatable {
     @DocumentID var id: String?
     var content: String
-    var userId: String
+    var username: String
     var timestamp: Timestamp
     var conversationId: String
     var photoURL: String?
@@ -20,7 +20,7 @@ struct MessageModel: Identifiable, Codable, Equatable {
     enum CodingKeys: String, CodingKey {
         case id
         case content
-        case userId
+        case username = "userId"
         case timestamp
         case conversationId
         case photoURL

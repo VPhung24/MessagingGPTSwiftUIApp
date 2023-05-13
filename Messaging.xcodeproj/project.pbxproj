@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080FD8CE2A101A7600971E78 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080FD8CD2A101A7600971E78 /* Binding.swift */; };
 		082B87A329E5FAA500304F36 /* MessagingApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082B87A229E5FAA500304F36 /* MessagingApp.swift */; };
 		082B87A729E5FAA600304F36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 082B87A629E5FAA600304F36 /* Assets.xcassets */; };
 		082B87AA29E5FAA600304F36 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 082B87A929E5FAA600304F36 /* Preview Assets.xcassets */; };
@@ -46,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		080FD8CD2A101A7600971E78 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		082B879F29E5FAA500304F36 /* Messaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		082B87A229E5FAA500304F36 /* MessagingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingApp.swift; sourceTree = "<group>"; };
 		082B87A629E5FAA600304F36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 			children = (
 				08E3A8C22A0B4884001A7D07 /* KeychainItem.swift */,
 				08E3A8DA2A0C17CE001A7D07 /* LazyView.swift */,
+				080FD8CD2A101A7600971E78 /* Binding.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 				08E3A8CB2A0C05C1001A7D07 /* NewConversationView.swift in Sources */,
 				08453C4029FBE5C50082957B /* ChatBubble.swift in Sources */,
 				08453BDC29FB7D0B0082957B /* ImagePicker.swift in Sources */,
+				080FD8CE2A101A7600971E78 /* Binding.swift in Sources */,
 				087C15F129EE3B2A00F826CB /* ConversationListViewModel.swift in Sources */,
 				087C15F629EE454C00F826CB /* UserModel.swift in Sources */,
 				08E3A8B82A0B15EE001A7D07 /* AuthViewModel.swift in Sources */,

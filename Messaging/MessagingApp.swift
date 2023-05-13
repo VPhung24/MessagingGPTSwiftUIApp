@@ -21,6 +21,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct YourApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject var user: UserModel = UserModel(id: nil, username: nil, first: nil, last: nil)
 
     var body: some Scene {
         WindowGroup {

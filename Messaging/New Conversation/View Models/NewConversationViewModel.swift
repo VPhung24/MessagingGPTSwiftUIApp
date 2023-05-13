@@ -42,7 +42,7 @@ class NewConversationViewModel: ObservableObject {
         if searchText.isEmpty {
             return users
         } else {
-            return users.filter { $0.username.lowercased().contains(searchText.lowercased()) }
+            return users.filter { $0.username!.lowercased().contains(searchText.lowercased()) }
         }
     }
 }

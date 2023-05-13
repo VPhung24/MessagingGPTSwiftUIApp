@@ -9,13 +9,8 @@ import SwiftUI
 
 struct ConversationView: View {
     @ObservedObject var viewModel = ConversationViewModel()
-    let currentUserId: String
+    @EnvironmentObject var user: UserModel
     let conversationId: String
-
-    init(userId: String, conversationId: String) {
-        self.currentUserId = userId
-        self.conversationId = conversationId
-    }
 
     var body: some View {
         VStack {
@@ -23,7 +18,7 @@ struct ConversationView: View {
                 ScrollView(showsIndicators: false) {
                     LazyVStack(alignment: .leading, spacing: 8) {
                         ForEach(viewModel.messages) { message in
-                            MessageView(message: message, isFromCurrentUser: message.userId == currentUserId)
+                            MessageView(message: message, isFromCurrentUser: message.username == user.username)
                         }
                     }
                     .onChange(of: viewModel.messages) { _ in
@@ -35,9 +30,9 @@ struct ConversationView: View {
             Spacer()
 
             MessageInputView { message in
-                viewModel.sendMessage(messageContent: message, userId: currentUserId)
+                viewModel.sendMessage(messageContent: message, username: user.username!)
             } sendMessageWithImage: { (message, image) in
-                viewModel.sendMessageWithImage(messageContent: message, userId: currentUserId, image)
+                viewModel.sendMessageWithImage(messageContent: message, username: user.username!, image)
             }
             .padding(.bottom, 8)
         }
@@ -59,7 +54,8 @@ struct ConversationView: View {
  struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ConversationView(userId: "viv", conversationId: "ja7rfmcX42WX3nN17kJa")
+            ConversationView(conversationId: "ja7rfmcX42WX3nN17kJa")
+                .environmentObject(UserModel(id: "asdsad", username: "viv", first: "vivian", last: "phung"))
         }
     }
  }
