@@ -23,7 +23,8 @@ struct UserProfileView: View {
                     if user.editMode {
                         user.updateFirestore()
                    } else {
-                        user.editMode = true
+                       user.editState = .EditMode
+                       user.editMode = true
                     }
                 }) {
                     Text(user.editMode ? "Save" : "Edit")

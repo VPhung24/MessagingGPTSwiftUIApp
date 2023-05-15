@@ -17,6 +17,7 @@ class UserModel: Identifiable, Codable, Hashable, ObservableObject {
     @Published var last: String?
 
     @Published var editMode: Bool = false
+    @Published var editState: ProfileState = .NeedsFilled
     private var cancellables = Set<AnyCancellable>()
 
     init(id: String?, username: String?, first: String?, last: String?) {
@@ -75,12 +76,14 @@ class UserModel: Identifiable, Codable, Hashable, ObservableObject {
                     self.first = user.first
                     self.last = user.last
                     self.username = user.username
+                    self.editState = user.username == nil ? .NeedsFilled : .DoneMode
                 } catch {
                     print("error decoding user model \(error.localizedDescription)")
                 }
             } else {
                 let userModel = UserModel(id: id, username: nil, first: nil, last: nil)
                 self.updateUserModel(userModel)
+                self.editState = .NeedsFilled
             }
         }
     }
@@ -88,6 +91,7 @@ class UserModel: Identifiable, Codable, Hashable, ObservableObject {
     func updateFirestore() {
         self.updateUserModel(self)
         self.editMode = false
+        self.editState = .DoneMode
     }
 
     func updateUserModel(_ user: UserModel) {

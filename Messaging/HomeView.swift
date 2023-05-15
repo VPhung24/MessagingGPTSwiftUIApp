@@ -14,26 +14,18 @@ struct HomeView: View {
 
     var body: some View {
         if authViewModel.isSignedIn {
-            // todo: fix so edit mode doesn't leave conversation 
-            if user.username == nil || user.username == "" || user.editMode {
-                UserProfileView()
-                    .environmentObject(user)
-                    .onAppear {
-                        user.id = authViewModel.appUserUUID
-                        user.getUpdatedModel()
-                    }
-            } else {
                 ConversationsListView()
-                    .environmentObject(user)
-                    .onAppear {
-                        user.id = authViewModel.appUserUUID
-                        user.getUpdatedModel()
-                    }
-            }
+                    .environmentObject(authViewModel)
 
         } else {
             LoginView()
                 .environmentObject(authViewModel)
         }
     }
+}
+
+enum ProfileState {
+    case NeedsFilled
+    case EditMode
+    case DoneMode
 }

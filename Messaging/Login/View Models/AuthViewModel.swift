@@ -13,8 +13,8 @@ import AuthenticationServices
 
 class AuthViewModel: NSObject, ObservableObject {
     @Published var isSignedIn = false
-    @Published var appUserUUID: String?
     @Published var showProfileView: Bool = false
+    @Published var user: UserModel?
 
     let appleIDProvider = ASAuthorizationAppleIDProvider()
 
@@ -26,7 +26,9 @@ class AuthViewModel: NSObject, ObservableObject {
             case .authorized:
                 DispatchQueue.main.async {
                     let uuid = KeychainItem.currentUserIdentifier
-                    self.appUserUUID = uuid
+                    self.getUserFrom(id: uuid) { model in
+                        self.user = model
+                    }
                     self.isSignedIn = true
                 }
             case .revoked, .notFound:
@@ -49,27 +51,6 @@ class AuthViewModel: NSObject, ObservableObject {
 
 extension AuthViewModel: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-//        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential, let identityToken = appleIDCredential.identityToken {
-//            let credential = OAuthProvider.credential(withProviderID: "apple.com",
-//                                                      idToken: String(data: identityToken, encoding: .utf8)!,
-//                                                      rawNonce: nil)
-//
-//            Auth.auth().signIn(with: credential) { (success, error) in
-//                guard let user = success?.user else {
-//                    print(error?.localizedDescription ?? "error logging in")
-//                    return
-//                }
-//
-//                self.checkIfUserExists(userId: user.uid, completion: { userModel in
-//                    if let userModel = userModel {
-//                        self.saveUserInKeychain(userModel.id)
-//                        self.appUserUUID = userModel.id
-//                        self.isSignedIn = true
-//                    }
-//                })
-//
-//            }
-//        }
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential, let identityToken = appleIDCredential.identityToken {
 
             // Create Firebase credential.
@@ -100,18 +81,21 @@ extension AuthViewModel: ASAuthorizationControllerDelegate {
                     if let document = document, document.exists {
                         // The user document exists, the user has signed in before.
                         print("User exists: \(document.documentID)")
-                        self.appUserUUID = document.documentID
-                        self.isSignedIn = true
+                        self.getUserFrom(id: document.documentID) { user in
+                            self.user = user
+                            self.isSignedIn = true
+                        }
                     } else {
                         // The user document does not exist, this is a new user.
                         print("New user: \(appleID)")
 
                         let userModel = UserModel(id: nil, username: nil, first: nil, last: nil)
                         self.addUserToFirestore(appleID, user: userModel)
-                                                self.saveUserInKeychain(appleID)
-                                                self.appUserUUID = appleID
-                                                self.isSignedIn = true
-
+                        self.saveUserInKeychain(appleID)
+                        self.getUserFrom(id: appleID) { user in
+                            self.user = user
+                            self.isSignedIn = true
+                        }
                     }
                 }
             }
@@ -134,8 +118,8 @@ extension AuthViewModel: ASAuthorizationControllerDelegate {
         }
     }
 
-    private func checkIfUserExists(userId: String, completion: @escaping (UserModel?) -> Void) {
-        let docRef = Firestore.firestore().collection("users").document(userId)
+    private func getUserFrom(id: String, completion: @escaping (UserModel?) -> Void) {
+        let docRef = Firestore.firestore().collection("users").document(id)
 
         docRef.getDocument { (document, error) in
             guard let document = document else {
@@ -152,8 +136,8 @@ extension AuthViewModel: ASAuthorizationControllerDelegate {
                     completion(nil)
                 }
             } else {
-                let userModel = UserModel(id: userId, username: nil, first: nil, last: nil)
-                self.addUserToFirestore(userId, user: userModel)
+                let userModel = UserModel(id: id, username: nil, first: nil, last: nil)
+                self.addUserToFirestore(id, user: userModel)
                 completion(userModel)
             }
         }
